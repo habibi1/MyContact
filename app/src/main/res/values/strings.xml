@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Daftar Kontak</string>
+    <string name="about_page">about_page</string>
+    <string name="empty">Kosong</string>
+    <string name="add_contact">Tambah Kontak</string>
+    <string name="name">Nama</string>
+    <string name="phone">Telepon</string>
+    <string name="email">Email</string>
+    <string name="url_photo">URL Foto</string>
+    <string name="submit">Submit</string>
+    <string name="search">Cari</string>
+    <string name="profile_name">Habibi</string>
+    <string name="profile_email">habibi.ilyas@gmail.com</string>
+    <string name="photo_profile">Foto Profil</string>
+    <string name="button_delete">Tombol Hapus</string>
+    <string name="scroll">scroll</string>
+</resources>
