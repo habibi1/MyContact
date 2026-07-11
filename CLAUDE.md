@@ -19,8 +19,10 @@ MyContact is a single-module Android contacts app written in Kotlin with Jetpack
 ```
 
 Notes:
-- The `gradle/wrapper/` directory (wrapper jar + properties) is not committed, so `./gradlew` will fail as-is. Either generate it (`gradle wrapper`) or use a locally installed Gradle compatible with AGP 7.3.1 (Gradle 7.4+).
-- Toolchain is pinned old: AGP 7.3.1, Kotlin 1.6.10, Compose compiler extension 1.1.1, Compose UI 1.3.1 (`compose_version` in root `build.gradle`), compile/target SDK 33, min SDK 21, JVM target 1.8. Kotlin and the Compose compiler versions are coupled — don't bump one without the other.
+- Toolchain: Gradle 9.6.1 (wrapper committed), AGP 9.2.1 (requires JDK 17+), Kotlin 2.4.0. The Compose compiler ships with Kotlin via the `org.jetbrains.kotlin.plugin.compose` Gradle plugin — its version must always match the Kotlin plugin version in the root `build.gradle`.
+- Compose library versions come from the Compose BOM (`androidx.compose:compose-bom`) in `app/build.gradle`; individual `androidx.compose.*` dependencies are declared without versions. `material-icons-core` is pinned separately (frozen at 1.7.8, no longer pulled in by material3).
+- SDK levels: compileSdk/targetSdk 37, minSdk 23 (Compose 1.11+ requires 23). Java/Kotlin target 17.
+- Image loading is Coil 3: imports use `coil3.compose.AsyncImage`, and network URL support comes from the `io.coil-kt.coil3:coil-network-okhttp` artifact — keep it when touching Coil dependencies or remote images silently stop loading.
 - Meaningful test coverage is in the instrumentation tests (`app/src/androidTest/`), which exercise the Compose UI with `createComposeRule`; the lone local unit test is a placeholder.
 
 ## Architecture

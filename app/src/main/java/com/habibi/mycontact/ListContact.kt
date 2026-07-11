@@ -1,7 +1,6 @@
 package com.habibi.mycontact
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +22,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.habibi.mycontact.ui.common.ListViewEvent
 import com.habibi.mycontact.ui.components.ContactItem
 import com.habibi.mycontact.ui.components.EmptyLayout
@@ -48,18 +46,14 @@ import com.habibi.mycontact.ui.components.SearchBar
 import com.habibi.mycontact.ui.components.SettingsDialog
 import kotlin.math.roundToInt
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalLifecycleComposeApi::class,
-    ExperimentalFoundationApi::class
-)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListContact(
     viewModel: MainViewModel,
     onProfileClick: () -> Unit,
     onItemClicked: (String) -> Unit
 ) {
-    val viewState = viewModel.consumableState().collectAsState()
+    val viewState = viewModel.consumableState().collectAsStateWithLifecycle()
     val query by viewModel.query
 
     val fabHeight = 72.dp
@@ -143,7 +137,11 @@ fun ListContact(
                                     item = hero,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .animateItemPlacement(tween(durationMillis = 100)),
+                                        .animateItem(
+                                            fadeInSpec = null,
+                                            fadeOutSpec = null,
+                                            placementSpec = tween(durationMillis = 100)
+                                        ),
                                     onRemoveClicked = {
                                         viewModel.handleEvent(ListViewEvent.Remove(it))
                                     },
